@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EDE768C2-4F66-474C-BF63-22FA9128973C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Work360.Services.Leaves.Api", "src\Work360.Services.Leaves.Api\Work360.Services.Leaves.Api.csproj", "{B1A472AC-0FF2-4226-8F5C-7551A9E0C715}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Work360.Services.Leaves.Application", "src\Work360.Services.Leaves.Application\Work360.Services.Leaves.Application.csproj", "{D2BCD880-9865-46B7-8664-C1FC4E657C91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Work360.Services.Leaves.Core", "src\Work360.Services.Leaves.Core\Work360.Services.Leaves.Core.csproj", "{604E6ABB-7127-47BE-A04D-60FC79C6A98F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Work360.Services.Leaves.Infrastructure", "src\Work360.Services.Leaves.Infrastructure\Work360.Services.Leaves.Infrastructure.csproj", "{494F9C99-E7F0-4452-A3BB-E30B44C7AF20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B1A472AC-0FF2-4226-8F5C-7551A9E0C715} = {EDE768C2-4F66-474C-BF63-22FA9128973C}
+		{D2BCD880-9865-46B7-8664-C1FC4E657C91} = {EDE768C2-4F66-474C-BF63-22FA9128973C}
+		{604E6ABB-7127-47BE-A04D-60FC79C6A98F} = {EDE768C2-4F66-474C-BF63-22FA9128973C}
+		{494F9C99-E7F0-4452-A3BB-E30B44C7AF20} = {EDE768C2-4F66-474C-BF63-22FA9128973C}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1A472AC-0FF2-4226-8F5C-7551A9E0C715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A472AC-0FF2-4226-8F5C-7551A9E0C715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A472AC-0FF2-4226-8F5C-7551A9E0C715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A472AC-0FF2-4226-8F5C-7551A9E0C715}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2BCD880-9865-46B7-8664-C1FC4E657C91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2BCD880-9865-46B7-8664-C1FC4E657C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2BCD880-9865-46B7-8664-C1FC4E657C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2BCD880-9865-46B7-8664-C1FC4E657C91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{604E6ABB-7127-47BE-A04D-60FC79C6A98F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{604E6ABB-7127-47BE-A04D-60FC79C6A98F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{604E6ABB-7127-47BE-A04D-60FC79C6A98F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{604E6ABB-7127-47BE-A04D-60FC79C6A98F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{494F9C99-E7F0-4452-A3BB-E30B44C7AF20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{494F9C99-E7F0-4452-A3BB-E30B44C7AF20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{494F9C99-E7F0-4452-A3BB-E30B44C7AF20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{494F9C99-E7F0-4452-A3BB-E30B44C7AF20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

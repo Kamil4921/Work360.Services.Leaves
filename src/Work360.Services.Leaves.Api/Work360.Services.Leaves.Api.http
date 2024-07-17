@@ -1,0 +1,6 @@
+@Work360.Services.Leaves.Api_HostAddress = http://localhost:5194
+
+GET {{Work360.Services.Leaves.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
