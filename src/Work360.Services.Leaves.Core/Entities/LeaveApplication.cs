@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Work360.Services.Leaves.Core.Events;
 using Work360.Services.Leaves.Core.Exceptions;
 
@@ -11,7 +10,8 @@ public class LeaveApplication : AggregateRoot
     public Guid EmployeeId { get; set; }
     public Employee Employee { get; set; }
     public DateTime CreatedAt { get; private set; }
-    public LeaveApplication(Employee employee)
+
+    private LeaveApplication(Employee employee)
     {
         Id = new Guid();
         EmployeeId = employee.Id;
@@ -19,7 +19,7 @@ public class LeaveApplication : AggregateRoot
         CreatedAt = DateTime.Now;
     }
 
-    public LeaveApplication CreateApplication(Employee employee, DateTime startLeave, int leaveDuration)
+    public static LeaveApplication CreateApplication(Employee employee, DateTime startLeave, int leaveDuration)
     {
         var leave = new LeaveApplication(employee);
         leave.SetLeave(startLeave, leaveDuration);
