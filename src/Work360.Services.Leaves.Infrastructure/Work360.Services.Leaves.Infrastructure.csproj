@@ -11,12 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.EntityFrameworkCore">
-      <HintPath>..\..\..\..\.nuget\packages\microsoft.entityframeworkcore\8.0.7\lib\net8.0\Microsoft.EntityFrameworkCore.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Work360.Services.Leaves.Application\Work360.Services.Leaves.Application.csproj" />
     <ProjectReference Include="..\Work360.Services.Leaves.Core\Work360.Services.Leaves.Core.csproj" />
   </ItemGroup>
