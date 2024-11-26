@@ -9,7 +9,7 @@ public class Employee : AggregateRoot
         Id = new Guid();
     }
     
-    public Employee CreateEmployee()
+    public static Employee CreateEmployee()
     {
         var employee = new Employee();
         employee.AddEvent(new EmployeeCreated(employee));
