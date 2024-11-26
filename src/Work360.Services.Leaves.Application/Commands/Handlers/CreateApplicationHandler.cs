@@ -1,4 +1,5 @@
 using MediatR;
+using Work360.Services.Leaves.Application.Exceptions;
 using Work360.Services.Leaves.Application.Services;
 using Work360.Services.Leaves.Core.Entities;
 using Work360.Services.Leaves.Core.Repositories;
@@ -17,7 +18,7 @@ public class CreateApplicationHandler(ILeaveRepository leaveRepository, ICustome
     {
         if (!(await _employeeRepository.ExistAsync(request.Employee.Id)))
         {
-            throw new ApplicationException();
+            throw new EmployeeNotFoundException(request.Employee.Id);
         }
         var application = LeaveApplication.CreateApplication(request.Employee, request.StartLeave, request.LeaveDuration);
         var adding = _leaveRepository.AddAsync(application);
