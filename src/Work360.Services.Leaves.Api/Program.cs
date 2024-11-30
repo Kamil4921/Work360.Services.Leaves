@@ -1,10 +1,15 @@
+using Work360.Services.Leaves.Application;
+using Work360.Services.Leaves.Infrastructure;
+using Work360.Services.Leaves.Infrastructure.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,6 +40,9 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+
+var serviceBusReceiver = app.Services.GetRequiredService<ServiceBusMessageReceiver>();
+await serviceBusReceiver.StartAsync();
 
 app.Run();
 
