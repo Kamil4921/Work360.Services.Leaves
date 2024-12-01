@@ -4,7 +4,7 @@ namespace Work360.Services.Leaves.Infrastructure.Services;
 
 public class ServiceBusMessageReceiver
 {
-    private const string connectionString = "Endpoint=sb://localhost:8081/";
+    private const string connectionString = "Endpoint=sb://localhost:5672/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=RootManageSharedAccessKeyValue;UseDevelopmentEmulator=true;";
     private const string topicName = "employee-topic";
     private const string subscriptionName = "subscription.1";
     private ServiceBusProcessor _processor;
