@@ -10,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
+builder.Services.AddSingleton<ServiceBusMessageReceiver>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,6 +21,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+var serviceBusReceiver = app.Services.GetRequiredService<ServiceBusMessageReceiver>();
+await serviceBusReceiver.StartAsync();
 
 var summaries = new[]
 {
@@ -40,9 +44,6 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
-
-var serviceBusReceiver = app.Services.GetRequiredService<ServiceBusMessageReceiver>();
-await serviceBusReceiver.StartAsync();
 
 app.Run();
 

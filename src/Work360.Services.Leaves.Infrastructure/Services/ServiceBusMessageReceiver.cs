@@ -6,8 +6,8 @@ public class ServiceBusMessageReceiver
 {
     private const string connectionString = "Endpoint=sb://localhost:5672/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=RootManageSharedAccessKeyValue;UseDevelopmentEmulator=true;";
     private const string topicName = "employee-topic";
-    private const string subscriptionName = "subscription.1";
-    private ServiceBusProcessor _processor;
+    private const string subscriptionName = "subscription.3";
+    public ServiceBusProcessor _processor;
 
     public async Task StartAsync()
     {
@@ -16,7 +16,7 @@ public class ServiceBusMessageReceiver
 
         _processor.ProcessMessageAsync += MessageHandler;
         _processor.ProcessErrorAsync += ErrorHandler;
-
+        Console.WriteLine("starting service bus");
         await _processor.StartProcessingAsync();
     }
 
@@ -30,6 +30,7 @@ public class ServiceBusMessageReceiver
 
     private Task ErrorHandler(ProcessErrorEventArgs args)
     {
+        Console.WriteLine("error ocured");
         // dodac handlowanie errorow
         return Task.CompletedTask;
     }
