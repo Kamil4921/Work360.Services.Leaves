@@ -1,12 +1,17 @@
+using System.Text.Json;
 using Azure.Messaging.ServiceBus;
+using MediatR;
+using Work360.Services.Leaves.Application.Commands;
+using Work360.Services.Leaves.Application.DTO;
 
 namespace Work360.Services.Leaves.Infrastructure.Services;
 
-public class ServiceBusMessageReceiver
+public class ServiceBusMessageReceiver (ISender mediator)
 {
     private const string connectionString = "Endpoint=sb://localhost:5672/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=RootManageSharedAccessKeyValue;UseDevelopmentEmulator=true;";
     private const string topicName = "employee-topic";
     private const string subscriptionName = "subscription.3";
+    private readonly ISender _mediator = mediator;
     public ServiceBusProcessor _processor;
 
     public async Task StartAsync()
@@ -20,17 +25,15 @@ public class ServiceBusMessageReceiver
         await _processor.StartProcessingAsync();
     }
 
-    private Task MessageHandler(ProcessMessageEventArgs args)
+    private async Task MessageHandler(ProcessMessageEventArgs args)
     {
-        var body = args.Message.Body.ToString();
-        Console.WriteLine(body);
-        
-        return Task.CompletedTask;
+        var employee = JsonSerializer.Deserialize<EmployeeDto>(args.Message.Body) ?? throw new ArgumentNullException();
+        await _mediator.Send(new CreateEmployee(employee.Id));
     }
 
     private Task ErrorHandler(ProcessErrorEventArgs args)
     {
-        Console.WriteLine("error ocured");
+        Console.WriteLine("error occured in the topic");
         // dodac handlowanie errorow
         return Task.CompletedTask;
     }
