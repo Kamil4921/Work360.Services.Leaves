@@ -8,6 +8,5 @@ public class LeaveApplicationDto(LeaveApplication leaveApplication)
     public DateTime StartLeave { get; set; } = leaveApplication.StartLeave;
     public int LeaveDuration { get; set; } = leaveApplication.LeaveDuration;
     public Guid EmployeeId { get; set; } = leaveApplication.EmployeeId;
-    //public EmployeeDto Employee { get; set; }
     public DateTime CreatedAt { get; private set; } = leaveApplication.CreatedAt;
 }

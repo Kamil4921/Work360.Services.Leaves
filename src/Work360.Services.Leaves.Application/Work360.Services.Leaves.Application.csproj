@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Work360.Services.Leaves.Core\Work360.Services.Leaves.Core.csproj" />
   </ItemGroup>
 
