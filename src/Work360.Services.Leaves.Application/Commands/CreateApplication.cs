@@ -4,7 +4,7 @@ using Work360.Services.Leaves.Core.Entities;
 namespace Work360.Services.Leaves.Application.Commands;
 
 [Contract]
-public abstract class CreateApplication(Employee employee, DateTime startLeave, int leaveDuration) : IRequest<Guid>
+public class CreateApplication(Employee employee, DateTime startLeave, int leaveDuration) : IRequest<Guid>
 {
     public Employee Employee { get; } = employee;
     public DateTime StartLeave { get; } = startLeave;
