@@ -1,11 +1,13 @@
+using MediatR;
 using Work360.Services.Leaves.Application;
+using Work360.Services.Leaves.Application.Commands;
+using Work360.Services.Leaves.Application.Queries;
+using Work360.Services.Leaves.Core.Entities;
 using Work360.Services.Leaves.Infrastructure;
 using Work360.Services.Leaves.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
@@ -13,7 +15,6 @@ builder.Services.AddInfrastructure();
 builder.Services.AddSingleton<ServiceBusMessageReceiver>();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -25,29 +26,18 @@ app.UseHttpsRedirection();
 var serviceBusReceiver = app.Services.GetRequiredService<ServiceBusMessageReceiver>();
 await serviceBusReceiver.StartAsync();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.MapGet("/leave", async (ISender mediator, Guid id) => await mediator.Send(new GetLeave(id))).WithOpenApi()
+    .WithName("GetLeave");
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+app.MapGet("/leaves", async (ISender mediator) => 
+        await mediator.Send(new GetLeaves()))
+    .WithOpenApi()
+    .WithName("GetLeaves");
+
+app.MapPost("/leave/add", async (ISender mediator, Employee employee, DateTime startDate, int duration) =>
+        await mediator.Send(new CreateApplication(employee, startDate, duration)))
+    .WithOpenApi()
+    .WithName("AddLeave");
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
