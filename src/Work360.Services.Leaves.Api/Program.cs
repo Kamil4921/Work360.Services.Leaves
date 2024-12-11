@@ -12,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
-builder.Services.AddSingleton<ServiceBusMessageReceiver>();
+//builder.Services.AddSingleton<ServiceBusMessageReceiver>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
