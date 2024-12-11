@@ -1,6 +1,6 @@
-using System.Text.Json;
 using Azure.Messaging.ServiceBus;
 using MediatR;
+using Newtonsoft.Json;
 using Work360.Services.Leaves.Application.Commands;
 using Work360.Services.Leaves.Application.DTO;
 
@@ -11,7 +11,6 @@ public class ServiceBusMessageReceiver (ISender mediator)
     private const string connectionString = "Endpoint=sb://localhost:5672/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=RootManageSharedAccessKeyValue;UseDevelopmentEmulator=true;";
     private const string topicName = "employee-topic";
     private const string subscriptionName = "subscription.3";
-    private readonly ISender _mediator = mediator;
     public ServiceBusProcessor _processor;
 
     public async Task StartAsync()
@@ -27,8 +26,9 @@ public class ServiceBusMessageReceiver (ISender mediator)
 
     private async Task MessageHandler(ProcessMessageEventArgs args)
     {
-        var employee = JsonSerializer.Deserialize<EmployeeDto>(args.Message.Body) ?? throw new ArgumentNullException();
-        await _mediator.Send(new CreateEmployee(employee.Id));
+        var employees = JsonConvert.DeserializeObject<List<EmployeeDto>>(args.Message.Body.ToString())?? throw new ArgumentNullException();
+        var employee = employees!.First();
+        await mediator.Send(new CreateEmployee(employee.EmployeeId));
     }
 
     private Task ErrorHandler(ProcessErrorEventArgs args)
