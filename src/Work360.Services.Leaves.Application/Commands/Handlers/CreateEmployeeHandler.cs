@@ -6,24 +6,20 @@ using Work360.Services.Leaves.Core.Repositories;
 
 namespace Work360.Services.Leaves.Application.Commands.Handlers;
 
-public class CreateEmployeeHandler(ICustomerRepository employeeRepository,
+public class CreateEmployeeHandler(ICustomerRepository customerRepository,
     IEventMapper eventMapper, IMessageBroker messageBroker) : IRequestHandler<CreateEmployee, Guid>
 {
-    private readonly ICustomerRepository _employeeRepository = employeeRepository;
-    private readonly IEventMapper _eventMapper = eventMapper;
-    private readonly IMessageBroker _messageBroker = messageBroker;
-
     public async Task<Guid> Handle(CreateEmployee request, CancellationToken cancellationToken)
     {
-        if (!(await _employeeRepository.ExistAsync(request.employeeId)))
+        if (!await customerRepository.ExistAsync(request.employeeId))
         {
             throw new EmployeeNotFoundException(request.employeeId);
         }
 
         var employee = Employee.CreateEmployee();
-        var adding = _employeeRepository.AddAsync(employee);
-        var events = _eventMapper.MapAll(employee.Events);
-        var publishing = _messageBroker.PublishAsync(events);
+        var adding = customerRepository.AddAsync(employee);
+        var events = eventMapper.MapAll(employee.Events);
+        var publishing = messageBroker.PublishAsync(events);
 
         await Task.WhenAll(adding, publishing);
 

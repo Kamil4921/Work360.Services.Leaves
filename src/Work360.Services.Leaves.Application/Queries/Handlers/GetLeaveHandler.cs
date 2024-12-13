@@ -7,11 +7,9 @@ namespace Work360.Services.Leaves.Application.Queries.Handlers;
 
 public class GetLeaveHandler(ILeaveRepository leaveRepository) : IRequestHandler<GetLeave, LeaveApplicationDto>
 {
-    private readonly ILeaveRepository _leaveRepository = leaveRepository;
-    
     public async Task<LeaveApplicationDto> Handle(GetLeave request, CancellationToken cancellationToken)
     {
-        var leave = await _leaveRepository.GetAsync(request.LeaveId);
+        var leave = await leaveRepository.GetAsync(request.LeaveId);
 
         if (leave is null)
         {

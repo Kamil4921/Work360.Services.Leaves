@@ -6,28 +6,26 @@ namespace Work360.Services.Leaves.Infrastructure.Postgres;
 
 public class LeaveRepository(AppDbContext context) : ILeaveRepository
 {
-    private readonly AppDbContext _context = context;
-
     public async Task<LeaveApplication?> GetAsync(Guid id)
     {
-        return await _context.Leaves.AsQueryable().AsNoTracking().FirstOrDefaultAsync(l => l.Id == id);
+        return await context.Leaves.AsQueryable().AsNoTracking().FirstOrDefaultAsync(l => l.Id == id);
     }
 
     public async Task<IEnumerable<LeaveApplication>> GetAllAsync()
     {
-        return await _context.Leaves.AsNoTracking().ToListAsync();
+        return await context.Leaves.AsNoTracking().ToListAsync();
     }
 
     public async Task AddAsync(LeaveApplication order)
     {
-        await _context.Leaves.AddAsync(order);
-        await _context.SaveChangesAsync();
+        await context.Leaves.AddAsync(order);
+        await context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(LeaveApplication order)
     {
         order.Version++;
-        await _context.Set<LeaveApplication>()
+        await context.Set<LeaveApplication>()
             .Where(o => o.Id == order.Id)
             .ExecuteUpdateAsync(o => o
                 .SetProperty(p => p.StartLeave, order.StartLeave)
@@ -40,11 +38,11 @@ public class LeaveRepository(AppDbContext context) : ILeaveRepository
 
     public async Task DeleteAsync(Guid id)
     {
-        var leaveToDelete = await _context.Leaves.FirstOrDefaultAsync(l => l.Id == id);
+        var leaveToDelete = await context.Leaves.FirstOrDefaultAsync(l => l.Id == id);
         if (leaveToDelete is not null)
         {
-            _context.Leaves.Remove(leaveToDelete);
-            await _context.SaveChangesAsync();
+            context.Leaves.Remove(leaveToDelete);
+            await context.SaveChangesAsync();
         }
     }
 }
