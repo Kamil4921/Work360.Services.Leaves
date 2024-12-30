@@ -28,7 +28,7 @@ public class ServiceBusMessageReceiver (ISender mediator, ILogger<ServiceBusMess
     {
         var employees = JsonConvert.DeserializeObject<List<EmployeeDto>>(args.Message.Body.ToString())?? throw new ArgumentNullException();
         var employee = employees.First();
-        await mediator.Send(new CreateEmployee(employee.EmployeeId));
+        await mediator.Send(new CreateEmployee(employee.EmployeeId, employee.EmployeeFullName));
     }
 
     private Task ErrorHandler(ProcessErrorEventArgs args)
