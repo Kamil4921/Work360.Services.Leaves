@@ -23,7 +23,7 @@ public class LeaveApplication : AggregateRoot
     {
         var leave = new LeaveApplication(employee);
         leave.SetLeave(startLeave, leaveDuration);
-        leave.AddEvent(new LeaveCreated(leave));
+        leave.AddEvent(new LeaveCreated(leave, employee.FullName));
 
         return leave;
     }
