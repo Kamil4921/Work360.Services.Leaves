@@ -11,12 +11,12 @@ public class CreateEmployeeHandler(ICustomerRepository customerRepository,
 {
     public async Task<Guid> Handle(CreateEmployee request, CancellationToken cancellationToken)
     {
-        if (!await customerRepository.ExistAsync(request.employeeId))
+        if (!await customerRepository.ExistAsync(request.EmployeeId))
         {
-            throw new EmployeeNotFoundException(request.employeeId);
+            throw new EmployeeNotFoundException(request.EmployeeId);
         }
 
-        var employee = Employee.CreateEmployee();
+        var employee = Employee.CreateEmployee(request.EmployeeId, request.EmployeeFullName);
         var adding = customerRepository.AddAsync(employee);
         var events = eventMapper.MapAll(employee.Events);
         var publishing = messageBroker.PublishAsync(events);

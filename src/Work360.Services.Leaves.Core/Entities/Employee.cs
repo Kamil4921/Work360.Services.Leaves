@@ -4,14 +4,17 @@ namespace Work360.Services.Leaves.Core.Entities;
 
 public class Employee : AggregateRoot
 {
-    public Employee()
+    public string FullName { get; set; }
+    
+    public Employee(Guid id, string fullName)
     {
-        Id = new Guid();
+        Id = id;
+        FullName = fullName;
     }
     
-    public static Employee CreateEmployee()
+    public static Employee CreateEmployee(Guid id, string fullName)
     {
-        var employee = new Employee();
+        var employee = new Employee(id, fullName);
         employee.AddEvent(new EmployeeCreated(employee));
 
         return employee;
