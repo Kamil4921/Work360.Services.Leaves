@@ -12,7 +12,7 @@ public class EventMapper : IEventMapper
         return @event switch
         {
             EmployeeCreated e => new Application.Events.EmployeeCreated(e.Employee.Id),
-            LeaveCreated e => new Application.Events.LeaveCreated(e.LeaveApplication.Id),
+            LeaveCreated e => new Application.Events.LeaveCreated(e.LeaveApplication.Id, e.EmployeeName, e.LeaveApplication.StartLeave, e.LeaveApplication.LeaveDuration),
             _ => null
         };
     }
