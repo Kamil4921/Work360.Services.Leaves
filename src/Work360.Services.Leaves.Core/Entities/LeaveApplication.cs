@@ -11,9 +11,10 @@ public class LeaveApplication : AggregateRoot
     public Employee Employee { get; set; }
     public DateTime CreatedAt { get; private set; }
 
+    public LeaveApplication() { }
     private LeaveApplication(Employee employee)
     {
-        Id = new Guid();
+        Id = Guid.NewGuid();
         EmployeeId = employee.Id;
         Employee = employee;
         CreatedAt = DateTime.Now;
