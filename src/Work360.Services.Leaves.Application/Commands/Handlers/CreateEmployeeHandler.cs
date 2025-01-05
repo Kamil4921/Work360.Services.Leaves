@@ -7,11 +7,11 @@ using Work360.Services.Leaves.Core.Repositories;
 namespace Work360.Services.Leaves.Application.Commands.Handlers;
 
 public class CreateEmployeeHandler(ICustomerRepository customerRepository,
-    IEventMapper eventMapper, IMessageBroker messageBroker) : IRequestHandler<CreateEmployee, Guid>
+    IEventMapper eventMapper, IMessageBroker messageBroker) : IRequestHandler<CreateEmployee>
 {
-    public async Task<Guid> Handle(CreateEmployee request, CancellationToken cancellationToken)
+    public async Task Handle(CreateEmployee request, CancellationToken cancellationToken)
     {
-        if (!await customerRepository.ExistAsync(request.EmployeeId))
+        if (await customerRepository.ExistAsync(request.EmployeeId))
         {
             throw new EmployeeNotFoundException(request.EmployeeId);
         }
@@ -22,7 +22,5 @@ public class CreateEmployeeHandler(ICustomerRepository customerRepository,
         var publishing = messageBroker.PublishAsync(events);
 
         await Task.WhenAll(adding, publishing);
-
-        return employee.Id;
     }
 }
