@@ -1,3 +1,4 @@
+using Azure.Messaging.ServiceBus;
 using MediatR;
 using Work360.Services.Leaves.Application;
 using Work360.Services.Leaves.Application.Commands;
@@ -22,8 +23,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var serviceBusReceiver = app.Services.GetRequiredService<ServiceBusMessageReceiver>();
-await serviceBusReceiver.StartAsync();
+var scope = app.Services.CreateScope();
+var scopedServiceBusReceiver = scope.ServiceProvider.GetRequiredService<ServiceBusMessageReceiver>();
+await scopedServiceBusReceiver.StartAsync();
+
+//var serviceBusReceiver = app.Services.GetRequiredService<ServiceBusMessageReceiver>();
+//await serviceBusReceiver.StartAsync();
 
 app.MapGet("/leave", async (ISender mediator, Guid id) => await mediator.Send(new GetLeave(id))).WithOpenApi()
     .WithName("GetLeave");

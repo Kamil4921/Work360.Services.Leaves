@@ -15,7 +15,7 @@ public static class Extensions
         services.AddTransient<ICustomerRepository, EmployeeRepository>();
         services.AddTransient<ILeaveRepository, LeaveRepository>();
         services.AddTransient<IMessageBroker, MessageBroker>();
-        services.AddSingleton<ServiceBusMessageReceiver>();
+        services.AddScoped<ServiceBusMessageReceiver>();
         
         services.AddEntityFrameworkNpgsql().AddDbContext<AppDbContext>(opt =>
             opt.UseNpgsql("Server=localhost;Port=5433;Database=postgres;User ID=postgres;Password=password;"));
