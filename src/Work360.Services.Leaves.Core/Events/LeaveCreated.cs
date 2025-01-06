@@ -2,8 +2,8 @@ using Work360.Services.Leaves.Core.Entities;
 
 namespace Work360.Services.Leaves.Core.Events;
 
-public class LeaveCreated(LeaveApplication leave, string employeeFullName) : IDomainEvent
+public class LeaveCreated(LeaveApplication leave, Guid employeeId) : IDomainEvent
 {
     public LeaveApplication LeaveApplication { get; } = leave;
-    public string EmployeeName { get; } = employeeFullName;
+    public Guid EmployeeId { get; } = employeeId;
 }
