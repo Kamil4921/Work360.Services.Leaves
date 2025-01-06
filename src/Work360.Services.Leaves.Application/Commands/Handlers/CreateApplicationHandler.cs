@@ -11,16 +11,17 @@ public class CreateApplicationHandler(ILeaveRepository leaveRepository, ICustome
 {
     public async Task<Guid> Handle(CreateApplication request, CancellationToken cancellationToken)
     {
-        if (!await customerRepository.ExistAsync(request.Employee.Id))
+        if (!await customerRepository.ExistAsync(request.EmployeeId))
         {
-            throw new EmployeeNotFoundException(request.Employee.Id);
+            throw new EmployeeNotFoundException(request.EmployeeId);
         }
-        var application = LeaveApplication.CreateApplication(request.Employee, request.StartLeave, request.LeaveDuration);
-        var adding = leaveRepository.AddAsync(application);
+        var utcDateTime = new DateTime(request.StartLeave.Ticks, DateTimeKind.Utc);
+        var application = LeaveApplication.CreateApplication(request.EmployeeId, utcDateTime, request.LeaveDuration);
+        await leaveRepository.AddAsync(application);
         var events = eventMapper.MapAll(application.Events);
         var publishing = messageBroker.PublishAsync(events);
 
-        await Task.WhenAll(adding, publishing);
+        await Task.WhenAll(publishing);
 
         return application.Id;
     }

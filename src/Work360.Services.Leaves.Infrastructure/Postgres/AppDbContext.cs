@@ -17,7 +17,7 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<LeaveApplication>()
             .HasOne(l=>l.Employee)
-            .WithMany()
+            .WithMany(e=> e.Leaves)
             .HasForeignKey(l=>l.EmployeeId);
     }
 }

@@ -27,9 +27,6 @@ var scope = app.Services.CreateScope();
 var scopedServiceBusReceiver = scope.ServiceProvider.GetRequiredService<ServiceBusMessageReceiver>();
 await scopedServiceBusReceiver.StartAsync();
 
-//var serviceBusReceiver = app.Services.GetRequiredService<ServiceBusMessageReceiver>();
-//await serviceBusReceiver.StartAsync();
-
 app.MapGet("/leave", async (ISender mediator, Guid id) => await mediator.Send(new GetLeave(id))).WithOpenApi()
     .WithName("GetLeave");
 
@@ -38,8 +35,8 @@ app.MapGet("/leaves", async (ISender mediator) =>
     .WithOpenApi()
     .WithName("GetLeaves");
 
-app.MapPost("/leave/add", async (ISender mediator, Employee employee, DateTime startDate, int duration) =>
-        await mediator.Send(new CreateApplication(employee, startDate, duration)))
+app.MapPost("/leave/add", async (ISender mediator, Guid employeeId, DateTime startDate, int duration) =>
+        await mediator.Send(new CreateApplication(employeeId, startDate, duration)))
     .WithOpenApi()
     .WithName("AddLeave");
 

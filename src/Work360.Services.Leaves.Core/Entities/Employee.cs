@@ -4,6 +4,7 @@ namespace Work360.Services.Leaves.Core.Entities;
 
 public class Employee : AggregateRoot
 {
+    public ICollection<LeaveApplication> Leaves { get; set; } = new List<LeaveApplication>();
     public string FullName { get; set; }
     
     public Employee(Guid id, string fullName)
