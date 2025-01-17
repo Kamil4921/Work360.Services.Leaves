@@ -46,6 +46,6 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: true
-        tags:
-          - ${{ secrets.DH_USERNAME }}/work360-services-leaves:$IMAGE_TAG
-          - ${{ secrets.DH_USERNAME }}/work360-services-leaves:latest
+        tags: | 
+          ${{ secrets.DH_USERNAME }}/work360-services-leaves:$IMAGE_TAG
+          ${{ secrets.DH_USERNAME }}/work360-services-leaves:latest
