@@ -20,8 +20,10 @@ jobs:
         
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --no-restore
+      
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
@@ -36,5 +38,5 @@ jobs:
         IMAGE_TAG: ${{ steps.vars.outputs.short_sha }}
       run: |
         echo "${{ secrets.DH_PASSWORD }}" docker login -u ${{ secrets.DH_USERNAME }} --password-stdin
-        docker build -f Dockerfile -t $DH_USERNAME/work360-services-leaves:$IMAGE_TAG -t $DH_USERNAME/work360-services-leaves:latest .
-        docker push $DH_USERNAME/work360-services-leaves --all-tags
+        docker build -f Dockerfile -t ${{ secrets.DH_USERNAME }}/work360-services-leaves:$IMAGE_TAG -t ${{ secrets.DH_USERNAME }}/work360-services-leaves:latest .
+        docker push ${{ secrets.DH_USERNAME }}/work360-services-leaves --all-tags
