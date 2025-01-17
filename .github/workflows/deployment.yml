@@ -37,5 +37,5 @@ jobs:
         IMAGE_TAG: ${{ steps.vars.outputs.short_sha }}
       run: |
         docker login -u $DH_USERNAME -p ${{ secrets.DH_PASSWORD }}
-        docker build -f Dockerfile -t $DH_USERNAME/work360-services-notification:$IMAGE_TAG -t $DH_USERNAME/work360-services-notification:latest .
-        docker push $DH_USERNAME/work360-services-notification --all-tags
+        docker build -f Dockerfile -t $DH_USERNAME/work360-services-leaves:$IMAGE_TAG -t $DH_USERNAME/work360-services-leaves:latest .
+        docker push $DH_USERNAME/work360-services-leaves --all-tags
