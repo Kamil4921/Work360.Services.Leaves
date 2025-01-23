@@ -6,8 +6,13 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
 COPY ["src/Work360.Services.Leaves.Api/Work360.Services.Leaves.Api.csproj", "src/Work360.Services.Leaves.Api/"]
+COPY ["src/Work360.Services.Leaves.Application/Work360.Services.Leaves.Application.csproj", "src/Work360.Services.Leaves.Application/"]
+COPY ["src/Work360.Services.Leaves.Core/Work360.Services.Leaves.Core.csproj", "src/Work360.Services.Leaves.Core/"]
+COPY ["src/Work360.Services.Leaves.Infrastructure/Work360.Services.Leaves.Infrastructure.csproj", "src/Work360.Services.Leaves.Infrastructure/"]
 RUN dotnet restore "src/Work360.Services.Leaves.Api/Work360.Services.Leaves.Api.csproj"
+
 COPY . .
 WORKDIR "src/Work360.Services.Leaves.Api"
 RUN dotnet build "Work360.Services.Leaves.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
