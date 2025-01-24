@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: work360-leaves
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: work360-leave-deployment
+  namespace: work360-leaves
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: work360-leave
+  template:
+    metadata:
+      labels:
+        app: work360-leave
+    spec:
+      containers:
+        - name: work360-leave
+          image: kamil4921/work360-services-leave:TODO
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: work360-leave-service
+  namespace: work360-leaves
+spec:
+  selector:
+    app: work360-leave
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8080
+  type: LoadBalancer
