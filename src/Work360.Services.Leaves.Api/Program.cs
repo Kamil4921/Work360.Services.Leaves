@@ -1,10 +1,12 @@
 using Azure.Messaging.ServiceBus;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Work360.Services.Leaves.Application;
 using Work360.Services.Leaves.Application.Commands;
 using Work360.Services.Leaves.Application.Queries;
 using Work360.Services.Leaves.Core.Entities;
 using Work360.Services.Leaves.Infrastructure;
+using Work360.Services.Leaves.Infrastructure.Postgres;
 using Work360.Services.Leaves.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,18 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    
+    // TODO: Extract to helper
+    #region Migration
+    
+    using var dbScope = ((IApplicationBuilder)app).ApplicationServices.CreateScope();
+
+    await using var dbContext =
+        dbScope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    dbContext.Database.Migrate();
+
+    #endregion
 }
 
 app.UseHttpsRedirection();

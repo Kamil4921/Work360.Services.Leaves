@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.DependencyInjection;
 using Work360.Services.Leaves.Application.Services;
 using Work360.Services.Leaves.Core.Repositories;
@@ -18,7 +19,9 @@ public static class Extensions
         services.AddScoped<ServiceBusMessageReceiver>();
         
         services.AddEntityFrameworkNpgsql().AddDbContext<AppDbContext>(opt =>
-            opt.UseNpgsql("Server=localhost;Port=5433;Database=postgres;User ID=postgres;Password=password;"));
+            opt.UseNpgsql("Server=localhost;Port=5433;Database=postgres;User ID=postgres;Password=password;",
+                npgsqlOptions =>
+                    npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Default)));
 
         return services;
     }
